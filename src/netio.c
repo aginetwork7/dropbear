@@ -22,7 +22,6 @@ struct dropbear_progress_connection {
 	char* errstring;
 	char *bind_address, *bind_port;
 	enum dropbear_prio prio;
-	time_t connect_start;
 	int timeout;
 };
 
@@ -202,7 +201,6 @@ struct dropbear_progress_connection *connect_remote(const char* remotehost, cons
 	c->cb = cb;
 	c->cb_data = cb_data;
 	c->prio = prio;
-	c->connect_start = monotonic_now();
 	c->timeout = timeout;
 
 	list_append(&ses.conn_pending, c);
@@ -307,7 +305,7 @@ void set_connect_fds(fd_set *writefd) {
 		m_list_elem *next_iter = iter->next;
 		struct dropbear_progress_connection *c = iter->item;
 
-		if (c->timeout > 0 && monotonic_now() - c->connect_start > c->timeout) {
+		if (c->timeout > 0 && monotonic_now() > ses.connect_time + c->timeout) {
 			c->cb(DROPBEAR_FAILURE, -1, c->cb_data, "Connection timed out");
 			remove_connect(c, iter);
 			iter = next_iter;
@@ -376,7 +374,7 @@ void update_connect_timeout(time_t now, long *timeout) {
 	for (iter = ses.conn_pending.first; iter; iter = iter->next) {
 		c = (struct dropbear_progress_connection*)iter->item;
 		if (c->timeout > 0) {
-			long remaining = c->timeout - (now - c->connect_start);
+			long remaining = c->timeout - (now - ses.connect_time);
 			if (remaining < 0) {
 				remaining = 0;
 			}
