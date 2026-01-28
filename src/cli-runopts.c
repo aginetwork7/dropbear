@@ -969,11 +969,7 @@ static void add_extendedopt(const char* origstr) {
 		return;
 	}
 	if (match_extendedopt(&optstr, "ConnectTimeout") == DROPBEAR_SUCCESS) {
-		unsigned int val;
-		if (m_str_to_uint(optstr, &val) == DROPBEAR_FAILURE) {
-			dropbear_exit("Bad ConnectTimeout '%s'", optstr);
-		}
-		cli_opts.connect_timeout = val;
+		cli_opts.connect_timeout = parse_uint_value(optstr, "ConnectTimeout");
 		return;
 	}
 #if DROPBEAR_CLI_ANYTCPFWD
