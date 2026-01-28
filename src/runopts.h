@@ -53,6 +53,7 @@ typedef struct runopts {
 	const char *cipher_list;
 	const char *mac_list;
 #endif
+	int conn_timeout;
 
 } runopts;
 
@@ -167,6 +168,7 @@ typedef struct cli_runopts {
 	int quiet;
 	int backgrounded;
 	int is_subsystem;
+	int conn_timeout;
 #if DROPBEAR_CLI_PUBKEY_AUTH
 	m_list *privkeys; /* Keys to use for public-key auth */
 #endif

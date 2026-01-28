@@ -302,6 +302,7 @@ void set_connect_fds(fd_set *writefd) {
 	while (iter) {
 		m_list_elem *next_iter = iter->next;
 		struct dropbear_progress_connection *c = iter->item;
+
 		/* Set one going */
 		while (c->res_iter && c->sock < 0) {
 			connect_try_next(c);
