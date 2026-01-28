@@ -14,7 +14,7 @@ distdir=""
 if [ "$hardware" = "arm64" ]; then
   # supported arm64-jetson arm64-spark arm64-axis
   platform="linux/arm64/v8"
-  dockername="arm64v8-jetson-dropbear"
+  dockername="arm64v8-dropbear"
   docker_baseImg="arm64v8/alpine:3.20"
 elif [ "$hardware" = "arm" ]; then
   platform="linux/arm/v7"
@@ -22,7 +22,7 @@ elif [ "$hardware" = "arm" ]; then
   docker_baseImg="arm32v7/alpine:3.20"
 else
   echo "Unsupported hardware: $hardware"
-  echo "Supported hardware: arm64, arm64-axis, arm, arm-axis"
+  echo "Supported hardware: arm64, arm"
   exit 1
 fi
 
