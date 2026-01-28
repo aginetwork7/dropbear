@@ -551,9 +551,9 @@ static void checktimeouts() {
 		&& elapsed(now, ses.connect_time) >= AUTH_TIMEOUT) {
 			dropbear_close("Timeout before auth");
 	}
-	if (IS_DROPBEAR_CLIENT && opts.connect_timeout
+	if (IS_DROPBEAR_CLIENT && opts.conn_timeout
 		&& !ses.authstate.authdone && ses.connect_time
-		&& now - ses.connect_time >= opts.connect_timeout) {
+		&& now - ses.connect_time >= opts.conn_timeout) {
 			dropbear_close("Timeout");
 	}
 
@@ -623,8 +623,8 @@ static long select_timeout() {
 		update_timeout(AUTH_TIMEOUT, now, ses.connect_time, &timeout);
 	}
 
-	if (IS_DROPBEAR_CLIENT && opts.connect_timeout && !ses.authstate.authdone) {
-		update_timeout(opts.connect_timeout, now, ses.connect_time,
+	if (IS_DROPBEAR_CLIENT && opts.conn_timeout && !ses.authstate.authdone) {
+		update_timeout(opts.conn_timeout, now, ses.connect_time,
 			&timeout);
 	}
 
