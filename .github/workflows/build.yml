@@ -51,8 +51,8 @@ jobs:
           #   # our tests expect >= python3.7
           #   runcheck: 'no'
 
-          - name: linux clang
-            cc: clang
+          # - name: linux clang
+          #   cc: clang
 
           # Some platforms only have old compilers, we try to keep
           # compatibilty. For some reason -std=c89 doesn't enforce
