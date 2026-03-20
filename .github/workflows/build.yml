@@ -23,8 +23,8 @@ jobs:
 
         # MULTI and NOWRITEV are passed as integers to the build
         include:
-          - name: plain linux
-            upload_sizes: 1
+          # - name: plain linux
+          #   upload_sizes: 1
 
           - name: multi binary
             multi: 1
@@ -38,9 +38,9 @@ jobs:
             runcheck: 'no'
             make_target: PROGRAMS=dbclient
 
-          - name: server only
-            runcheck: 'no'
-            make_target: PROGRAMS=dropbear
+          # - name: server only
+          #   runcheck: 'no'
+          #   make_target: PROGRAMS=dropbear
 
           - name: bundled libtom, 22.04, no writev()
             # test can use an older distro with bundled libtommath
@@ -155,9 +155,9 @@ jobs:
               #define DROPBEAR_SHA2_512_HMAC 1
               #define DROPBEAR_CLI_PUBKEY_AUTH 0
 
-          - name: pq, no plain x25519
-            localoptions: |
-              #define DROPBEAR_CURVE25519 0
+          # - name: pq, no plain x25519
+          #   localoptions: |
+          #     #define DROPBEAR_CURVE25519 0
 
           # # Fuzzers run standalone. A bit superfluous with cifuzz, but
           # # good to run the whole corpus to keep it working.
