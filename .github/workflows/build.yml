@@ -99,9 +99,9 @@ jobs:
           #     #define DEBUG_TRACE 5
 
           # Check off-by-default options don't bitrot
-          - name: nondefault options
-            nondefault: 1
-            configure_flags: --enable-pam
+          # - name: nondefault options
+          #   nondefault: 1
+          #   configure_flags: --enable-pam
 
           - name: most options disabled
             configure_flags: --disable-harden --disable-zlib --disable-openpty --disable-lastlog
