@@ -26,9 +26,9 @@ jobs:
           # - name: plain linux
           #   upload_sizes: 1
 
-          - name: multi binary
-            multi: 1
-            multilink: 1
+          # - name: multi binary
+          #   multi: 1
+          #   multilink: 1
 
           - name: multi binary, dropbearmulti argv0
             multi: 1
