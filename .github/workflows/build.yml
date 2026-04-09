@@ -10,6 +10,13 @@ on:
       - master
 jobs:
   test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: for pass test
+        run: |
+          echo "This is a test to check that the workflow is working. If you see this, the workflow is running and you can add more steps to it."
+
+  build:
     runs-on: ${{ matrix.os || 'ubuntu-24.04' }}
     strategy:
       matrix:
