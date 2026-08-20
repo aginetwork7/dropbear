@@ -16,5 +16,4 @@ package() {
 
 package "arm"
 package "arm64"
-package "arm-axis"
-package "arm64-axis"
+package "x86_64"
