@@ -153,6 +153,7 @@ void cli_getopts(int argc, char ** argv) {
 	cli_opts.ask_hostkey = 1;
 	cli_opts.no_hostkey_check = 0;
 	cli_opts.is_subsystem = 0;
+	cli_opts.conn_timeout = 0;
 #if DROPBEAR_CLI_PUBKEY_AUTH
 	cli_opts.privkeys = list_new();
 #endif
@@ -198,6 +199,7 @@ void cli_getopts(int argc, char ** argv) {
 	opts.recv_window = DEFAULT_RECV_WINDOW;
 	opts.keepalive_secs = DEFAULT_KEEPALIVE;
 	opts.idle_timeout_secs = DEFAULT_IDLE_TIMEOUT;
+	opts.conn_timeout = 0;
 
 	fill_own_user();
 
@@ -925,6 +927,7 @@ static void add_extendedopt(const char* origstr) {
 		dropbear_log(LOG_INFO, "Available options:\n"
 			"\tBatchMode\n"
 			"\tBindAddress\n"
+			"\tConnectTimeout\n"
 			"\tDisableTrivialAuth\n"
 #if DROPBEAR_CLI_ANYTCPFWD
 			"\tExitOnForwardFailure\n"
@@ -966,7 +969,14 @@ static void add_extendedopt(const char* origstr) {
 		cli_opts.disable_trivial_auth = parse_flag_value(optstr);
 		return;
 	}
-
+	if (match_extendedopt(&optstr, "ConnectTimeout") == DROPBEAR_SUCCESS) {
+		unsigned int val;
+		if (m_str_to_uint(optstr, &val) == DROPBEAR_FAILURE) {
+			dropbear_exit("Bad ConnectTimeout '%s'", optstr);
+		}
+		cli_opts.conn_timeout = val;
+		return;
+	}
 #if DROPBEAR_CLI_ANYTCPFWD
 	if (match_extendedopt(&optstr, "ExitOnForwardFailure") == DROPBEAR_SUCCESS) {
 		cli_opts.exit_on_fwd_failure = parse_flag_value(optstr);
@@ -1042,6 +1052,8 @@ static void add_extendedopt(const char* origstr) {
 		}
 		return;
 	}
+
+	opts.conn_timeout = cli_opts.conn_timeout;
 
 #ifndef DISABLE_SYSLOG
 	if (match_extendedopt(&optstr, "UseSyslog") == DROPBEAR_SUCCESS) {
